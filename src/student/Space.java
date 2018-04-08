@@ -5,7 +5,10 @@ package student;
  * @author Lauren Egts
  */
 
-public class Space implements model.Space{
+//IMPORTANT: currently doesn't implement the Space model interface
+    //if that is implemented the collocated has to compare a model.Space
+    //and I don't think that's a good thing
+public class Space {
 
     private int row;
     private int col;
@@ -18,7 +21,6 @@ public class Space implements model.Space{
         this.col = col;
     }
 
-    @Override
     /**
      * gets this space's row
      */
@@ -26,7 +28,6 @@ public class Space implements model.Space{
         return row;
     }
 
-    @Override
     /**
      * gets this space's column
      */
@@ -34,11 +35,10 @@ public class Space implements model.Space{
         return col;
     }
 
-    @Override
     /**
      * returns true if other has the same row and column as this space
      */
-    public boolean collocated(model.Space other) {
+    public boolean collocated(student.Space other) {
         return (other.getCol() == col) && (other.getRow() == row);
     }
 }

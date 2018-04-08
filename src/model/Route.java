@@ -44,7 +44,7 @@ public interface Route {
      *
      * @return The {@link Orientation} of this route.
      */
-    Orientation getOrientation();
+    Orientation getOrt();
 
     /**
      * The set of {@linkplain Track tracks} that make up this route.
