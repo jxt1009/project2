@@ -54,6 +54,6 @@ public class Station implements model.Station{
      * //TODO figure out if I should cast other to a station, not sure because this is inherited from Space
      */
     public boolean collocated(Space other) {
-        return other.getRow() == row && other.getCol() == this.col;
+        return (other.getRow() == row) && (other.getCol() == this.col);
     }
 }
