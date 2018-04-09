@@ -22,8 +22,8 @@ import java.util.List;
 public class Route {
 
     private Baron baron;
-    private Station origin;
-    private Station destination;
+    private student.Station origin;
+    private student.Station destination;
     private int length;
     private Orientation ort;
     private ArrayList<student.Track> tracks;
@@ -36,7 +36,7 @@ public class Route {
      * @param length the length of the route
      * @param orientation the orientation of the route, either vertical or horizontal
      */
-    public Route(Station origin, Station destination, int length, Orientation orientation){
+    public Route(student.Station origin, student.Station destination, int length, Orientation orientation){
         this.baron = Baron.UNCLAIMED;
         //baron is set to unclaimed because when created route won't have a baron
         this.origin = origin;
@@ -66,7 +66,7 @@ public class Route {
 
         if(ort.toString().equals("VERTICAL")){ //case VERTICAL ORIENTATION
             for(int y = origin.getCol(); y < destination.getCol(); y++){
-                Track newTrack = new Track(ort, this, origin.getRow(), y);
+                student.Track newTrack = new student.Track(ort, this, origin.getRow(), y);
                 tracks.add(newTrack);
             }
         } else{ //case HORIZONTAL ORIENTATION
@@ -113,7 +113,7 @@ public class Route {
      * gets the route's tracks
      * @return the route's tracks
      */
-    public List<Track> getTracks() {
+    public List<student.Track> getTracks() {
         return tracks;
     }
 
