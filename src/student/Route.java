@@ -33,18 +33,25 @@ public class Route {
      * creates a route
      * @param origin the station the route originates from
      * @param destination the station the route will go to
-     * @param length the length of the route
      * @param orientation the orientation of the route, either vertical or horizontal
      */
-    public Route(student.Station origin, student.Station destination, int length, Orientation orientation){
+    public Route(student.Station origin, student.Station destination, Orientation orientation) {
         this.baron = Baron.UNCLAIMED;
         //baron is set to unclaimed because when created route won't have a baron
         this.origin = origin;
         this.destination = destination;
-        this.length = length;
+        //this.length = length;
         this.ort = orientation;
 
         tracks = new ArrayList<>();
+
+        if (ort.toString().equals("VERTICAL")) {
+            this.length = destination.getRow() - origin.getRow() - 1;
+            System.out.println(length);
+        } else {
+            this.length = destination.getCol() - origin.getCol() - 1;
+            System.out.println(length);
+        }
 
         /**
          * check for invalid routes
@@ -54,28 +61,48 @@ public class Route {
          * if route is invalid, throws an invalid route exception
          */
 
-        if(origin.collocated(destination) ||
-                !(origin.getRow() == destination.getRow() && origin.getCol() < destination.getCol()) ||
-                !(origin.getRow() < destination.getRow() && origin.getCol() == destination.getCol())){
+
+        if (origin.collocated(destination)) { //case origin and destination are on same space
             try {
                 throw new InvalidRouteException(origin, destination);
             } catch (InvalidRouteException e) {
-                System.out.println("Origin and destination stations are on same space");
+                System.out.println("Invalid route");
             }
+        } else if (ort.toString().equals("HORIZONTAL")) { //case horizontal orientation
+            if(!(origin.getRow() == destination.getRow() && origin.getCol() < destination.getCol() && ort.toString().equals("HORIZONTAL") && length >= 1)) {
+                //if proposed route doesn't meet the conditions for it to be valid
+                try {
+                    throw new InvalidRouteException(origin, destination);
+                } catch (InvalidRouteException e) {
+                    System.out.println("Invalid route");
+                }
+            }
+        } else if (ort.toString().equals("VERTICAL")) { //case vertical orientation
+            if(!(origin.getRow() < destination.getRow() && origin.getCol() == destination.getCol() && ort.toString().equals("VERTICAL") && length >= 1)) {
+                //if proposed route doesn't meet the conditions for it to be valid
+                try {
+                    throw new InvalidRouteException(origin, destination);
+                } catch (InvalidRouteException e) {
+                    System.out.println("Invalid route");
+                }
+            }
+        } else{ //i need an else statement because i had else ifs but this shouldn't do anything and if it does run something is very wrong
+            System.out.println("valid route");
         }
 
-        if(ort.toString().equals("VERTICAL")){ //case VERTICAL ORIENTATION
-            for(int y = origin.getCol(); y < destination.getCol(); y++){
+        if (ort.toString().equals("HORIZONTAL")) { //case HORIZONTAL ORIENTATION
+            for (int y = origin.getCol(); y < destination.getCol() - 1; y++) {
                 student.Track newTrack = new student.Track(ort, this, origin.getRow(), y);
                 tracks.add(newTrack);
             }
-        } else{ //case HORIZONTAL ORIENTATION
-            for(int x = origin.getRow(); x < destination.getCol(); x++){
+        } else { //case VERTICAL ORIENTATION
+            for (int x = origin.getRow(); x < destination.getCol() - 1; x++) {
                 Track newTrack = new Track(ort, this, x, origin.getCol());
                 tracks.add(newTrack);
             }
         }
     }
+
 
     /**
      * gets the route's owner

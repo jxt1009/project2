@@ -18,7 +18,7 @@ public class TestTrack {
 
         station1 = new Station("station2", 1, 3);
         station2 = new Station("station3", 3, 3);
-        route = new Route(station1, station2, 3, Orientation.VERTICAL);
+        route = new Route(station1, station2, Orientation.VERTICAL);
 
         //    public Track(Orientation ort, student.Route route, int row, int col){
         track1 = new Track(Orientation.VERTICAL, route, 1, 1);
